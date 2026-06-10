@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Conecta Eleitor">
+  <rect width="512" height="512" rx="112" fill="#071827"/>
+  <path d="M96 344c38-70 90-105 156-105s118 35 156 105" fill="none" stroke="#42d4bc" stroke-width="34" stroke-linecap="round"/>
+  <circle cx="256" cy="177" r="68" fill="#ffffff"/>
+  <path d="M182 176c24-36 50-54 78-54 32 0 58 19 79 58" fill="none" stroke="#1976c7" stroke-width="24" stroke-linecap="round"/>
+  <path d="M168 366h176" stroke="#ffffff" stroke-width="30" stroke-linecap="round"/>
+  <path d="M212 407h88" stroke="#42d4bc" stroke-width="22" stroke-linecap="round"/>
+</svg>

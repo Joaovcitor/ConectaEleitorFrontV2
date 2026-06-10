@@ -1,0 +1,44 @@
+{
+  "name": "Conecta Eleitor",
+  "short_name": "Conecta",
+  "description": "Gestão de eleitores, demandas, agendas e compromissos institucionais.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f6fa",
+  "theme_color": "#071827",
+  "categories": ["productivity", "government", "business"],
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Eleitores",
+      "short_name": "Eleitores",
+      "description": "Abrir cadastro de eleitores",
+      "url": "/eleitores",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Demandas",
+      "short_name": "Demandas",
+      "description": "Abrir demandas",
+      "url": "/demandas",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Nova demanda",
+      "short_name": "Nova demanda",
+      "description": "Registrar nova demanda",
+      "url": "/demandas?novo=1",
+      "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}
