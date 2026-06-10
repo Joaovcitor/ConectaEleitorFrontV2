@@ -32,10 +32,59 @@ import type {
   RegisterResponse,
 } from "./types";
 
-const listFrom = <T>(payload: T[] | PagedResult<T>) => {
+const listFrom = <T>(payload: T[] | PagedResult<T> | null | undefined) => {
   if (Array.isArray(payload)) return payload;
-  return payload.items ?? payload.data ?? [];
+  if (!payload) return [];
+
+  const normalizedPayload = payload as PagedResult<T> & { Items?: T[]; Data?: T[] };
+  return normalizedPayload.items ?? normalizedPayload.data ?? normalizedPayload.Items ?? normalizedPayload.Data ?? [];
 };
+
+const numberFrom = (value: number | null | undefined) => value ?? 0;
+
+const normalizeDemandReport = (payload?: Partial<DemandReportDTO> | null): DemandReportDTO => ({
+  totalDemands: numberFrom(payload?.totalDemands),
+  openDemands: numberFrom(payload?.openDemands),
+  inProgressDemands: numberFrom(payload?.inProgressDemands),
+  completedDemands: numberFrom(payload?.completedDemands),
+  canceledDemands: numberFrom(payload?.canceledDemands),
+  demandsByStatus: payload?.demandsByStatus ?? [],
+  demandsByMonth: payload?.demandsByMonth ?? [],
+});
+
+const normalizeAppointmentReport = (payload?: Partial<AppointmentReportDTO> | null): AppointmentReportDTO => ({
+  totalAppointments: numberFrom(payload?.totalAppointments),
+  scheduledAppointments: numberFrom(payload?.scheduledAppointments),
+  completedAppointments: numberFrom(payload?.completedAppointments),
+  canceledAppointments: numberFrom(payload?.canceledAppointments),
+  appointmentsByStatus: payload?.appointmentsByStatus ?? [],
+  appointmentsByMonth: payload?.appointmentsByMonth ?? [],
+});
+
+const normalizeDashboardReport = (payload?: Partial<DashboardReportDTO> | null): DashboardReportDTO => ({
+  totalCitizens: numberFrom(payload?.totalCitizens),
+  totalActiveCitizens: numberFrom(payload?.totalActiveCitizens),
+  totalInactiveCitizens: numberFrom(payload?.totalInactiveCitizens),
+  totalLeaders: numberFrom(payload?.totalLeaders),
+  totalVoters: numberFrom(payload?.totalVoters),
+  demands: normalizeDemandReport(payload?.demands),
+  appointments: normalizeAppointmentReport(payload?.appointments),
+  citizensByType: payload?.citizensByType ?? [],
+  citizensByNeighborhood: payload?.citizensByNeighborhood ?? [],
+  citizensByDistrict: payload?.citizensByDistrict ?? [],
+  topLeaders: payload?.topLeaders ?? [],
+});
+
+const normalizeCitizenDetails = (payload: CitizenResponseByIdDTO): CitizenResponseByIdDTO => ({
+  ...payload,
+  ledCitizens: payload.ledCitizens ?? [],
+  demands: payload.demands ?? [],
+});
+
+const normalizeAgendaDetails = (payload: AgendaResponseByIdDTO): AgendaResponseByIdDTO => ({
+  ...payload,
+  appointments: payload.appointments ?? [],
+});
 
 export const authService = {
   login: async (data: LoginData) => (await api.post<LoginResponse>("/Auth/login", data)).data,
@@ -50,7 +99,7 @@ export const citizenService = {
   leaders: async (params?: PaginationParams) => listFrom((await api.get<CitizenResponseDTO[] | PagedResult<CitizenResponseDTO>>("/Citizen/citizens/leaders", { params })).data),
   create: async (data: CitizenCreateDTO) => (await api.post<CitizenResponseDTO>("/Citizen", data)).data,
   update: async (id: string, data: CitizenUpdateDTO) => (await api.put<CitizenResponseDTO>(`/Citizen/${id}`, data)).data,
-  getById: async (id: string) => (await api.get<CitizenResponseByIdDTO>(`/Citizen/${id}`)).data,
+  getById: async (id: string) => normalizeCitizenDetails((await api.get<CitizenResponseByIdDTO>(`/Citizen/${id}`)).data),
 };
 
 export const demandService = {
@@ -70,7 +119,7 @@ export const agendaService = {
   create: async (data: AgendaCreateDTO) => (await api.post<AgendaResponseDTO>("/Agenda", data)).data,
   update: async (id: string, data: AgendaUpdateDTO) => (await api.put<AgendaResponseDTO>(`/Agenda/agenda/${id}`, data)).data,
   delete: async (id: string) => api.delete(`/Agenda/agenda/${id}`),
-  getById: async (id: string) => (await api.get<AgendaResponseByIdDTO>(`/Agenda/agenda/${id}`)).data,
+  getById: async (id: string) => normalizeAgendaDetails((await api.get<AgendaResponseByIdDTO>(`/Agenda/agenda/${id}`)).data),
 };
 
 export const appointmentService = {
@@ -82,8 +131,8 @@ export const appointmentService = {
 };
 
 export const reportService = {
-  dashboard: async (params?: ReportBaseFilterDTO) => (await api.get<DashboardReportDTO>("/reports/dashboard", { params })).data,
-  demands: async (params?: DemandReportFilterDTO) => (await api.get<DemandReportDTO>("/reports/demands", { params })).data,
-  appointments: async (params?: AppointmentReportFilterDTO) => (await api.get<AppointmentReportDTO>("/reports/appointments", { params })).data,
-  topLeaders: async (params?: ReportBaseFilterDTO) => (await api.get<LeaderRankingDTO[]>("/reports/top-leaders", { params })).data,
+  dashboard: async (params?: ReportBaseFilterDTO) => normalizeDashboardReport((await api.get<DashboardReportDTO>("/reports/dashboard", { params })).data),
+  demands: async (params?: DemandReportFilterDTO) => normalizeDemandReport((await api.get<DemandReportDTO>("/reports/demands", { params })).data),
+  appointments: async (params?: AppointmentReportFilterDTO) => normalizeAppointmentReport((await api.get<AppointmentReportDTO>("/reports/appointments", { params })).data),
+  topLeaders: async (params?: ReportBaseFilterDTO) => listFrom((await api.get<LeaderRankingDTO[] | PagedResult<LeaderRankingDTO>>("/reports/top-leaders", { params })).data),
 };
