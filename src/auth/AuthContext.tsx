@@ -67,8 +67,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         await refreshUser();
       },
       logout: async () => {
-        await authService.logout();
-        setUser(null);
+        try {
+          await authService.logout();
+        } catch {
+          // A sessão local deve ser encerrada mesmo se o cookie remoto já expirou ou o CORS bloqueou a chamada.
+        } finally {
+          setUser(null);
+        }
       },
       refreshUser,
     };

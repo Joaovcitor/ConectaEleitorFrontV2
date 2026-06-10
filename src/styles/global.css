@@ -609,6 +609,19 @@ small {
   border: 1px solid #a9e6d0;
 }
 
+.info {
+  background: #eef7ff;
+  color: #19557f;
+  border: 1px solid #add6f5;
+}
+
+.inline-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
 .form-actions {
   display: flex;
   justify-content: flex-end;

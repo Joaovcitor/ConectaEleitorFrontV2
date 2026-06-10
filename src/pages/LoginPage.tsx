@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LockKeyhole, LogIn, Mail } from "lucide-react";
+import { LockKeyhole, LogIn, LogOut, Mail } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { getErrorMessage } from "../api/client";
 import { useAuth } from "../auth/AuthContext";
@@ -16,11 +16,9 @@ type LoginForm = z.infer<typeof schema>;
 
 export function LoginPage() {
   const [error, setError] = useState("");
-  const { login, isAuthenticated, loading } = useAuth();
+  const { login, logout, isAuthenticated, loading, user } = useAuth();
   const navigate = useNavigate();
   const form = useForm<LoginForm>({ resolver: zodResolver(schema), defaultValues: { email: "", password: "" } });
-
-  if (!loading && isAuthenticated) return <Navigate to="/" replace />;
 
   const onSubmit = form.handleSubmit(async (data) => {
     try {
@@ -31,6 +29,12 @@ export function LoginPage() {
       setError(getErrorMessage(err));
     }
   });
+
+  const handleLogout = async () => {
+    setError("");
+    await logout();
+    form.reset();
+  };
 
   return (
     <main className="login-page">
@@ -47,6 +51,18 @@ export function LoginPage() {
             <p>Acesse sua área de trabalho.</p>
           </div>
         </div>
+        {!loading && isAuthenticated && (
+          <div className="alert info">
+            <span>Sessão ativa como {user?.completeName ?? user?.email}.</span>
+            <div className="inline-actions">
+              <Link className="ghost-button" to="/">Continuar</Link>
+              <button className="danger-button" type="button" onClick={handleLogout}>
+                <LogOut size={18} />
+                Sair
+              </button>
+            </div>
+          </div>
+        )}
         <form onSubmit={onSubmit} className="form-grid">
           <label>
             E-mail
