@@ -1,4 +1,4 @@
-import { BarChart3, CalendarPlus, ClipboardCheck, ClipboardList, ClipboardPlus, Filter, MapPinned, RefreshCw, TrendingUp, UserCheck, UserPlus, Users } from "lucide-react";
+import { BarChart3, CalendarPlus, ClipboardCheck, ClipboardList, ClipboardPlus, Filter, MapPinned, RefreshCw, TrendingUp, UserPlus, Users } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { getErrorMessage } from "../api/client";
@@ -81,10 +81,10 @@ export function DashboardPage() {
   }, [filters, demandStatus, appointmentStatus]);
 
   const metrics = useMemo(() => [
-    { label: "Eleitores cadastrados", value: report.totalCitizens, detail: `${report.totalActiveCitizens} ativos`, icon: <Users size={20} /> },
-    { label: "Lideranças", value: report.totalLeaders, detail: `${report.totalVoters} eleitores`, icon: <UserCheck size={20} /> },
-    { label: "Demandas totais", value: demandReport.totalDemands, detail: `${demandReport.openDemands} abertas`, icon: <ClipboardList size={20} /> },
+    { label: "Demandas", value: demandReport.totalDemands, detail: `${demandReport.openDemands} abertas`, icon: <ClipboardList size={20} /> },
     { label: "Compromissos", value: appointmentReport.totalAppointments, detail: `${appointmentReport.scheduledAppointments} agendados`, icon: <ClipboardCheck size={20} /> },
+    { label: "Eleitores", value: report.totalCitizens, detail: `${report.totalActiveCitizens} ativos`, icon: <Users size={20} /> },
+    { label: "Pendências", value: demandReport.openDemands + appointmentReport.scheduledAppointments, detail: "Demandas abertas e agenda prevista", icon: <TrendingUp size={20} /> },
   ], [appointmentReport, demandReport, report]);
 
   const maxNeighborhood = Math.max(1, ...report.citizensByNeighborhood.map((item) => item.total));

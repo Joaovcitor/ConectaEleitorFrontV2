@@ -2,7 +2,7 @@ export function DetailField({ label, value }: { label: string; value?: React.Rea
   return (
     <div className="detail-field">
       <span>{label}</span>
-      <strong>{value || "-"}</strong>
+      <strong>{value ?? "-"}</strong>
     </div>
   );
 }

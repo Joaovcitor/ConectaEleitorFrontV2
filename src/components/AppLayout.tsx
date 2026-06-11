@@ -1,4 +1,4 @@
-import { CalendarCheck, CalendarDays, ClipboardList, Download, Home, LogOut, Menu, UserCog, UserRound, Users, X } from "lucide-react";
+import { CalendarCheck, CalendarDays, ClipboardList, CreditCard, Download, Home, LogOut, Menu, Newspaper, UserCog, UserRound, Users, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../auth/AuthContext";
@@ -29,6 +29,8 @@ export function AppLayout() {
         { label: "Demandas", path: "/demandas", icon: <ClipboardList size={18} /> },
         { label: "Agendas", path: "/agendas", icon: <CalendarDays size={18} /> },
         { label: "Compromissos", path: "/compromissos", icon: <CalendarCheck size={18} /> },
+        { label: "Posts", path: "/posts", icon: <Newspaper size={18} /> },
+        { label: "Planos", path: "/planos", icon: <CreditCard size={18} /> },
         ...(canRegisterUsers ? [{ label: "Usuários", path: "/usuarios", icon: <UserCog size={18} /> }] : []),
       ]
     : isLeader
@@ -36,13 +38,18 @@ export function AppLayout() {
           { label: "Dashboard", path: "/", icon: <Home size={18} /> },
           { label: "Meus eleitores", path: "/eleitores", icon: <Users size={18} /> },
           { label: "Demandas", path: "/demandas", icon: <ClipboardList size={18} /> },
+          { label: "Planos", path: "/planos", icon: <CreditCard size={18} /> },
         ]
       : isVoter
         ? [
             { label: "Minhas demandas", path: "/demandas", icon: <ClipboardList size={18} /> },
             { label: "Nova demanda", path: "/demandas?novo=1", icon: <CalendarCheck size={18} /> },
+            { label: "Planos", path: "/planos", icon: <CreditCard size={18} /> },
           ]
-        : [{ label: "Dashboard", path: "/", icon: <Home size={18} /> }];
+        : [
+            { label: "Dashboard", path: "/", icon: <Home size={18} /> },
+            { label: "Planos", path: "/planos", icon: <CreditCard size={18} /> },
+          ];
 
   const handleLogout = async () => {
     await logout();
@@ -71,10 +78,10 @@ export function AppLayout() {
       {open && <button className="sidebar-backdrop" aria-label="Fechar menu" type="button" onClick={() => setOpen(false)} />}
       <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>
         <div className="brand">
-          <span>CE</span>
+          <span>LG</span>
           <div>
-            <strong>Conecta Eleitor</strong>
-            <small>Gestão de relacionamento</small>
+            <strong>LegisGest</strong>
+            <small>Gestão parlamentar moderna</small>
           </div>
         </div>
         <div className="sidebar-profile">

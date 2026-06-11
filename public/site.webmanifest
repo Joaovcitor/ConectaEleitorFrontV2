@@ -1,13 +1,13 @@
 {
-  "name": "Conecta Eleitor",
-  "short_name": "Conecta",
-  "description": "Gestão de eleitores, demandas, agendas e compromissos institucionais.",
+  "name": "LegisGest",
+  "short_name": "LegisGest",
+  "description": "Plataforma para gestão de mandato, eleitores, lideranças, demandas e compromissos.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f3f6fa",
-  "theme_color": "#071827",
+  "background_color": "#F5F7FA",
+  "theme_color": "#12344D",
   "categories": ["productivity", "government", "business"],
   "lang": "pt-BR",
   "icons": [

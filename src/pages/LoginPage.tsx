@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { LockKeyhole, LogIn, LogOut, Mail } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { z } from "zod";
 import { getErrorMessage } from "../api/client";
 import { useAuth } from "../auth/AuthContext";
@@ -18,13 +18,16 @@ export function LoginPage() {
   const [error, setError] = useState("");
   const { login, logout, isAuthenticated, loading, user } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const form = useForm<LoginForm>({ resolver: zodResolver(schema), defaultValues: { email: "", password: "" } });
+  const selectedPlan = searchParams.get("plano");
+  const continuePath = selectedPlan ? `/planos?plano=${encodeURIComponent(selectedPlan)}` : "/";
 
   const onSubmit = form.handleSubmit(async (data) => {
     try {
       setError("");
       await login(data);
-      navigate("/");
+      navigate(continuePath);
     } catch (err) {
       setError(getErrorMessage(err));
     }
@@ -39,23 +42,23 @@ export function LoginPage() {
   return (
     <main className="login-page">
       <section className="login-intro">
-        <span className="eyebrow">Conecta Eleitor</span>
-        <h1>Gestão política próxima, organizada e segura.</h1>
-        <p>Centralize eleitores, demandas, agendas e compromissos em uma experiência institucional simples de operar.</p>
+        <span className="eyebrow">LegisGest</span>
+        <h1>LegisGest</h1>
+        <p>Gestão parlamentar moderna e eficiente</p>
       </section>
       <section className="login-panel">
         <div className="login-brand">
-          <span>CE</span>
+          <span>LG</span>
           <div>
-            <h2>Entrar no sistema</h2>
-            <p>Acesse sua área de trabalho.</p>
+            <h2>LegisGest</h2>
+            <p>Gestão parlamentar moderna e eficiente</p>
           </div>
         </div>
         {!loading && isAuthenticated && (
           <div className="alert info">
             <span>Sessão ativa como {user?.completeName ?? user?.email}.</span>
             <div className="inline-actions">
-              <Link className="ghost-button" to="/">Continuar</Link>
+              <Link className="ghost-button" to={continuePath}>Continuar</Link>
               <button className="danger-button" type="button" onClick={handleLogout}>
                 <LogOut size={18} />
                 Sair
@@ -79,6 +82,10 @@ export function LoginPage() {
             <LogIn size={18} />
             {form.formState.isSubmitting ? "Entrando..." : "Entrar"}
           </button>
+          <div className="inline-actions">
+            <Link className="ghost-button" to="/apresentacao">Conhecer o sistema</Link>
+            <Link className="ghost-button" to="/planos-publicos">Ver planos</Link>
+          </div>
         </form>
       </section>
     </main>

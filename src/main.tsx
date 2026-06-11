@@ -19,6 +19,10 @@ import { DemandDetailsPage } from "./pages/DemandDetailsPage";
 import { DemandEditPage } from "./pages/DemandEditPage";
 import { DemandsPage } from "./pages/DemandsPage";
 import { LoginPage } from "./pages/LoginPage";
+import { PlansPage, PublicPlansPage } from "./pages/PlansPage";
+import { PostDetailsPage } from "./pages/PostDetailsPage";
+import { PostsPage } from "./pages/PostsPage";
+import { PublicHomePage } from "./pages/PublicHomePage";
 import { UserRegistrationPage } from "./pages/UserRegistrationPage";
 import "./styles/global.css";
 
@@ -32,7 +36,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <AuthProvider>
         <Routes>
+          <Route path="/apresentacao" element={<PublicHomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/planos-publicos" element={<PublicPlansPage />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route index element={<HomeRoute />} />
@@ -48,6 +54,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Route path="/compromissos" element={<OperationsOnly><AppointmentsPage /></OperationsOnly>} />
               <Route path="/compromissos/:id" element={<OperationsOnly><AppointmentDetailsPage /></OperationsOnly>} />
               <Route path="/compromissos/:id/editar" element={<OperationsOnly><AppointmentEditPage /></OperationsOnly>} />
+              <Route path="/posts" element={<OperationsOnly><PostsPage /></OperationsOnly>} />
+              <Route path="/posts/:id" element={<OperationsOnly><PostDetailsPage /></OperationsOnly>} />
+              <Route path="/planos" element={<PlansPage />} />
               <Route path="/usuarios" element={<UserRegistrationOnly><UserRegistrationPage /></UserRegistrationOnly>} />
             </Route>
           </Route>

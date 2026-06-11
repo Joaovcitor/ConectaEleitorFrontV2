@@ -117,12 +117,12 @@ export function CitizensPage() {
             <tbody>
               {filtered.map((citizen) => (
                 <tr key={citizen.citizenId}>
-                  <td><strong>{citizen.fullName}</strong><span>{citizen.phone ?? citizen.whatsApp}</span></td>
-                  <td><StatusBadge tone="teal">{citizenTypeLabel[citizen.type]}</StatusBadge></td>
-                  <td>{citizen.neighborhood ?? "-"}</td>
-                  <td>{citizen.leaderName ?? "-"}</td>
-                  <td><StatusBadge tone={citizen.isActive ? "green" : "slate"}>{citizen.isActive ? "Ativo" : "Inativo"}</StatusBadge></td>
-                  <td className="row-actions">
+                  <td data-label="Nome"><strong>{citizen.fullName}</strong><span>{citizen.phone ?? citizen.whatsApp}</span></td>
+                  <td data-label="Tipo"><StatusBadge tone="teal">{citizenTypeLabel[citizen.type]}</StatusBadge></td>
+                  <td data-label="Bairro">{citizen.neighborhood ?? "-"}</td>
+                  <td data-label="Liderança">{citizen.leaderName ?? "-"}</td>
+                  <td data-label="Status"><StatusBadge tone={citizen.isActive ? "green" : "slate"}>{citizen.isActive ? "Ativo" : "Inativo"}</StatusBadge></td>
+                  <td data-label="Ações" className="row-actions">
                     <Link title="Visualizar" to={`/eleitores/${citizen.citizenId}`}><Eye size={17} /></Link>
                     <Link title="Editar" to={`/eleitores/${citizen.citizenId}/editar`}><Edit size={17} /></Link>
                   </td>

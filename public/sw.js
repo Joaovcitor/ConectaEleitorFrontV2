@@ -1,4 +1,4 @@
-const CACHE_VERSION = "conecta-eleitor-v2";
+const CACHE_VERSION = "legisgest-v1";
 const APP_SHELL = ["/", "/index.html", "/offline.html", "/site.webmanifest", "/icon.svg", "/favicon.svg"];
 
 self.addEventListener("install", (event) => {
