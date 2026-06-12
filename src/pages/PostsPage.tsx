@@ -1,4 +1,4 @@
-import { ArrowLeft, Edit, Eye, Heart, MessageCircle, Newspaper, Pin, Plus, RefreshCw, Search, Send, Trash2, X } from "lucide-react";
+import { ArrowLeft, Edit, Eye, Heart, Info, MessageCircle, Newspaper, Pin, Plus, RefreshCw, Search, Send, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { getErrorMessage } from "../api/client";
@@ -297,6 +297,14 @@ export function PostsPage() {
         </button>
       </div>
 
+      <div className="beta-note">
+        <Info size={18} />
+        <div>
+          <strong>Posts em versão beta</strong>
+          <span>Este módulo já pode ser usado, mas ainda está em evolução. Valide conteúdo, visibilidade e interações antes de publicar fluxos definitivos.</span>
+        </div>
+      </div>
+
       {feedback && <div className="alert success"><strong>Sucesso</strong><span>{feedback}</span></div>}
       {error && <div className="alert error"><strong>Erro</strong><span>{error}</span></div>}
 
@@ -372,7 +380,7 @@ export function PostsPage() {
             {visiblePosts.map((post) => (
               <article className="social-post-card" key={post.assemblymanPostId}>
                 <header className="social-post-header">
-                  <div className="social-avatar">LG</div>
+                  <div className="social-avatar"><img src="/branding/legisgest-emblem.png" alt="Símbolo LegisGest" /></div>
                   <div className="social-author">
                     <strong>LegisGest</strong>
                     <span>{post.categoryName ?? "Publicação"} · {formatDate(post.createdAt)}</span>
@@ -421,7 +429,7 @@ export function PostsPage() {
                     {commentsError && <div className="comment-feedback error">{commentsError}</div>}
 
                     <form className="comment-form" onSubmit={(event) => saveComment(event, post.assemblymanPostId)}>
-                      <div className="comment-avatar">LG</div>
+                      <div className="comment-avatar"><img src="/branding/legisgest-emblem.png" alt="Símbolo LegisGest" /></div>
                       <input
                         value={commentInput}
                         onChange={(event) => setCommentInput(event.target.value)}

@@ -717,7 +717,7 @@ export function PublicPlansPage() {
   return (
     <main className="public-plans-shell">
       <header className="public-plans-nav">
-        <Link className="login-brand" to="/login"><span>LG</span><div><h2>LegisGest</h2><p>Gestão parlamentar moderna</p></div></Link>
+        <Link className="login-brand" to="/login"><img className="brand-mark" src="/branding/legisgest-emblem.png" alt="Símbolo LegisGest" /><div><h2>LegisGest</h2><p>Gestão parlamentar moderna</p></div></Link>
         <Link className="ghost-button" to="/login">Entrar</Link>
       </header>
       <section className="plans-page stack">

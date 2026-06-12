@@ -156,7 +156,14 @@ export const authService = {
 
 export const citizenService = {
   list: async (params?: PaginationParams) => listFrom((await api.get<CitizenResponseDTO[] | PagedResult<CitizenResponseDTO>>("/Citizen", { params })).data),
-  leaders: async (params?: PaginationParams) => listFrom((await api.get<CitizenResponseDTO[] | PagedResult<CitizenResponseDTO>>("/Citizen/citizens/leaders", { params })).data),
+  leaders: async (params?: PaginationParams) => {
+    try {
+      return listFrom((await api.get<CitizenResponseDTO[] | PagedResult<CitizenResponseDTO>>("/citizens/leaders", { params })).data);
+    } catch (error) {
+      if (!hasHttpStatus(error, 404)) throw error;
+      return listFrom((await api.get<CitizenResponseDTO[] | PagedResult<CitizenResponseDTO>>("/Citizen/citizens/leaders", { params })).data);
+    }
+  },
   create: async (data: CitizenCreateDTO) => (await api.post<CitizenResponseDTO>("/Citizen", data)).data,
   update: async (id: string, data: CitizenUpdateDTO) => (await api.put<CitizenResponseDTO>(`/Citizen/${id}`, data)).data,
   getById: async (id: string) => normalizeCitizenDetails((await api.get<CitizenResponseByIdDTO>(`/Citizen/${id}`)).data),

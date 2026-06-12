@@ -59,7 +59,7 @@ export function PostDetailsPage() {
 
       <article className="social-post-detail">
         <header className="social-post-header">
-          <div className="social-avatar">LG</div>
+          <div className="social-avatar"><img src="/branding/legisgest-emblem.png" alt="Símbolo LegisGest" /></div>
           <div className="social-author">
             <strong>LegisGest</strong>
             <span>{post.categoryName ?? "Publicação"} · {formatDateTime(post.createdAt)}</span>

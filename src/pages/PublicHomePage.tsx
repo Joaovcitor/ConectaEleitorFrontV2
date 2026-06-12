@@ -48,7 +48,7 @@ export function PublicHomePage() {
         <img src="/marketing/landing-hero.png" alt="Equipe usando um painel digital de gestão de relacionamento" />
         <div className="marketing-nav">
           <Link className="login-brand" to="/apresentacao">
-            <span>LG</span>
+            <img className="brand-mark" src="/branding/legisgest-emblem.png" alt="Símbolo LegisGest" />
             <div>
               <h2>LegisGest</h2>
               <p>Gestão parlamentar moderna</p>

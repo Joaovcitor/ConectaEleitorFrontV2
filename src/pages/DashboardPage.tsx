@@ -2,8 +2,8 @@ import { BarChart3, CalendarPlus, ClipboardCheck, ClipboardList, ClipboardPlus, 
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { getErrorMessage } from "../api/client";
-import { reportService } from "../api/services";
-import { AppointmentStatus, DemandStatus, appointmentStatusLabel, citizenTypeLabel, demandStatusLabel, type AppointmentReportDTO, type DashboardReportDTO, type DemandReportDTO, type ReportBaseFilterDTO } from "../api/types";
+import { citizenService, reportService } from "../api/services";
+import { AppointmentStatus, DemandStatus, appointmentStatusLabel, citizenTypeLabel, demandStatusLabel, type AppointmentReportDTO, type CitizenResponseDTO, type DashboardReportDTO, type DemandReportDTO, type ReportBaseFilterDTO } from "../api/types";
 import { useAuth } from "../auth/AuthContext";
 import { LoadingState } from "../components/LoadingState";
 import { StatusBadge } from "../components/StatusBadge";
@@ -54,6 +54,9 @@ export function DashboardPage() {
   const [draftDemandStatus, setDraftDemandStatus] = useState<number | undefined>();
   const [appointmentStatus, setAppointmentStatus] = useState<number | undefined>();
   const [draftAppointmentStatus, setDraftAppointmentStatus] = useState<number | undefined>();
+  const [citizens, setCitizens] = useState<CitizenResponseDTO[]>([]);
+  const [leaders, setLeaders] = useState<CitizenResponseDTO[]>([]);
+  const [filterOptionsLoading, setFilterOptionsLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -79,6 +82,20 @@ export function DashboardPage() {
   useEffect(() => {
     load(filters, demandStatus, appointmentStatus);
   }, [filters, demandStatus, appointmentStatus]);
+
+  useEffect(() => {
+    setFilterOptionsLoading(true);
+    Promise.all([citizenService.list({ pageSize: 500 }), citizenService.leaders({ pageSize: 500 })])
+      .then(([citizenData, leaderData]) => {
+        setCitizens(citizenData);
+        setLeaders(leaderData);
+      })
+      .catch(() => {
+        setCitizens([]);
+        setLeaders([]);
+      })
+      .finally(() => setFilterOptionsLoading(false));
+  }, []);
 
   const metrics = useMemo(() => [
     { label: "Demandas", value: demandReport.totalDemands, detail: `${demandReport.openDemands} abertas`, icon: <ClipboardList size={20} /> },
@@ -125,8 +142,8 @@ export function DashboardPage() {
           <label>Fim<input type="date" value={draftFilters.endDate ?? ""} onChange={(event) => setDraftFilters((current) => ({ ...current, endDate: event.target.value || undefined }))} /></label>
           <label>Bairro<input value={draftFilters.neighborhood ?? ""} onChange={(event) => setDraftFilters((current) => ({ ...current, neighborhood: event.target.value || undefined }))} /></label>
           <label>Distrito<input value={draftFilters.district ?? ""} onChange={(event) => setDraftFilters((current) => ({ ...current, district: event.target.value || undefined }))} /></label>
-          <label>ID do eleitor<input value={draftFilters.citizenId ?? ""} onChange={(event) => setDraftFilters((current) => ({ ...current, citizenId: event.target.value || undefined }))} /></label>
-          <label>ID da liderança<input value={draftFilters.leaderId ?? ""} onChange={(event) => setDraftFilters((current) => ({ ...current, leaderId: event.target.value || undefined }))} /></label>
+          <label>Eleitor<select value={draftFilters.citizenId ?? ""} disabled={filterOptionsLoading} onChange={(event) => setDraftFilters((current) => ({ ...current, citizenId: event.target.value || undefined }))}><option value="">{filterOptionsLoading ? "Carregando eleitores..." : "Todos"}</option>{citizens.map((citizen) => <option key={citizen.citizenId} value={citizen.citizenId}>{citizen.fullName}</option>)}</select></label>
+          <label>Liderança<select value={draftFilters.leaderId ?? ""} disabled={filterOptionsLoading} onChange={(event) => setDraftFilters((current) => ({ ...current, leaderId: event.target.value || undefined }))}><option value="">{filterOptionsLoading ? "Carregando lideranças..." : "Todas"}</option>{leaders.map((leader) => <option key={leader.citizenId} value={leader.citizenId}>{leader.fullName}</option>)}</select></label>
           <label>Status da demanda<select value={draftDemandStatus ?? ""} onChange={(event) => setDraftDemandStatus(event.target.value ? Number(event.target.value) : undefined)}><option value="">Todos</option><option value={DemandStatus.Open}>Aberta</option><option value={DemandStatus.InProgress}>Em andamento</option><option value={DemandStatus.Resolved}>Resolvida</option><option value={DemandStatus.Canceled}>Cancelada</option></select></label>
           <label>Status do compromisso<select value={draftAppointmentStatus ?? ""} onChange={(event) => setDraftAppointmentStatus(event.target.value ? Number(event.target.value) : undefined)}><option value="">Todos</option><option value={AppointmentStatus.Scheduled}>Agendado</option><option value={AppointmentStatus.Completed}>Concluído</option><option value={AppointmentStatus.Canceled}>Cancelado</option></select></label>
         </div>

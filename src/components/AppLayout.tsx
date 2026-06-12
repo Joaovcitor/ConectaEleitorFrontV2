@@ -78,7 +78,7 @@ export function AppLayout() {
       {open && <button className="sidebar-backdrop" aria-label="Fechar menu" type="button" onClick={() => setOpen(false)} />}
       <aside className={`sidebar ${open ? "sidebar-open" : ""}`}>
         <div className="brand">
-          <span>LG</span>
+          <img className="brand-mark" src="/branding/legisgest-emblem.png" alt="Símbolo LegisGest" />
           <div>
             <strong>LegisGest</strong>
             <small>Gestão parlamentar moderna</small>

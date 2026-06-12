@@ -48,7 +48,7 @@ export function LoginPage() {
       </section>
       <section className="login-panel">
         <div className="login-brand">
-          <span>LG</span>
+          <img className="brand-mark" src="/branding/legisgest-emblem.png" alt="Símbolo LegisGest" />
           <div>
             <h2>LegisGest</h2>
             <p>Gestão parlamentar moderna e eficiente</p>

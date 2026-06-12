@@ -1,5 +1,5 @@
 const CACHE_VERSION = "legisgest-v1";
-const APP_SHELL = ["/", "/index.html", "/offline.html", "/site.webmanifest", "/icon.svg", "/favicon.svg"];
+const APP_SHELL = ["/", "/index.html", "/offline.html", "/site.webmanifest", "/icon.svg", "/favicon.svg", "/branding/legisgest-emblem.png"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
