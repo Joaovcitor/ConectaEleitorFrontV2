@@ -45,6 +45,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Route path="/eleitores" element={<CitizensPage />} />
               <Route path="/eleitores/:id" element={<CitizenDetailsPage />} />
               <Route path="/eleitores/:id/editar" element={<CitizenEditPage />} />
+              <Route path="/mapa-eleitores" element={<Navigate to="/eleitores" replace />} />
               <Route path="/demandas" element={<DemandsPage />} />
               <Route path="/demandas/:id" element={<DemandDetailsPage />} />
               <Route path="/demandas/:id/editar" element={<DemandEditPage />} />

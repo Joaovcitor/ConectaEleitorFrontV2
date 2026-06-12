@@ -28,7 +28,6 @@ export const citizenFormSchema = z.object({
   notes: z.string().max(500, "Use no máximo 500 caracteres.").optional(),
   type: z.coerce.number().min(1, "Selecione o tipo."),
   leaderId: z.string().optional(),
-  userId: z.string().optional(),
   isActive: z.boolean().optional(),
 });
 
@@ -57,7 +56,6 @@ export const emptyCitizenForm = (isActive = true): CitizenFormData => ({
   notes: "",
   type: CitizenType.Voter,
   leaderId: "",
-  userId: "",
   isActive,
 });
 
@@ -193,7 +191,6 @@ export function CitizenFormPanel({ form, mode, error, onSubmit, onCancel }: Citi
             <div className="form-grid three-columns">
               <label className={fieldClass()}>Telefone<input autoComplete="tel" inputMode="tel" {...form.register("phone")} /></label>
               <label className={fieldClass()}>WhatsApp<input autoComplete="tel" inputMode="tel" {...form.register("whatsApp")} /></label>
-              <label className={fieldClass()}>ID do usuário<input {...form.register("userId")} /></label>
             </div>
           </section>
 

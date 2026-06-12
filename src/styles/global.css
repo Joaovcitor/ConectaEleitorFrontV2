@@ -2147,6 +2147,113 @@ td span {
   padding: 0 12px;
 }
 
+.voters-map-layout {
+  display: grid;
+  gap: 16px;
+}
+
+.voters-map-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.voters-map-summary article {
+  display: grid;
+  gap: 4px;
+  padding: 16px;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.voters-map-summary strong {
+  color: var(--navy-950);
+  font-size: 1.55rem;
+}
+
+.voters-map-summary span {
+  color: var(--slate-500);
+  font-weight: 800;
+}
+
+.voters-map-panel {
+  min-height: 560px;
+  overflow: hidden;
+  border: 1px solid var(--slate-200);
+  border-radius: var(--radius);
+  background: #ffffff;
+  box-shadow: var(--shadow-sm);
+}
+
+.voters-map {
+  width: 100%;
+  height: 620px;
+  min-height: 560px;
+}
+
+.voters-map-marker {
+  display: grid;
+  place-items: center;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: var(--blue-700);
+  color: #ffffff;
+  box-shadow: 0 12px 24px rgba(18, 52, 77, 0.24);
+}
+
+.voters-map-marker span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.voters-map-popup {
+  min-width: 240px;
+  display: grid;
+  gap: 5px;
+}
+
+.voters-map-popup > strong {
+  color: var(--navy-950);
+  font-size: 1rem;
+}
+
+.voters-map-popup > span,
+.voters-map-popup small {
+  color: var(--slate-500);
+  font-weight: 750;
+}
+
+.voters-map-popup ul {
+  max-height: 220px;
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.voters-map-popup li {
+  display: grid;
+  gap: 2px;
+  padding-top: 8px;
+  border-top: 1px solid #edf2f7;
+}
+
+.voters-map-popup li strong {
+  color: var(--navy-950);
+}
+
+.voters-map-popup li span {
+  color: var(--slate-500);
+}
+
 .social-post-detail {
   width: min(100%, 860px);
   margin: 0 auto;
@@ -2967,6 +3074,46 @@ td span {
     color: #ffffff;
   }
 
+  .voters-map-summary article,
+  .voters-map-panel {
+    background: #1f2937;
+    border-color: #4b5563;
+  }
+
+  .voters-map-summary strong {
+    color: #f9fafb;
+  }
+
+  .voters-map-summary span {
+    color: #d4deea;
+  }
+
+  .voters-map-marker {
+    border-color: #1f2937;
+    background: #3b82f6;
+  }
+
+  .leaflet-popup-content-wrapper,
+  .leaflet-popup-tip {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+
+  .voters-map-popup > strong,
+  .voters-map-popup li strong {
+    color: #f9fafb;
+  }
+
+  .voters-map-popup > span,
+  .voters-map-popup small,
+  .voters-map-popup li span {
+    color: #d4deea;
+  }
+
+  .voters-map-popup li {
+    border-top-color: #4b5563;
+  }
+
   .type-segment,
   .checkbox-card {
     background: #2b3a4d;
@@ -3229,8 +3376,18 @@ td span {
 
   .metric-grid,
   .action-grid,
-  .card-grid {
+  .card-grid,
+  .voters-map-summary {
     grid-template-columns: 1fr;
+  }
+
+  .voters-map-panel {
+    min-height: 440px;
+  }
+
+  .voters-map {
+    height: 480px;
+    min-height: 440px;
   }
 
   .posts-feed {

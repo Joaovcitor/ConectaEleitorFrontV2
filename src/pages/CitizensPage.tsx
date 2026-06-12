@@ -34,7 +34,6 @@ function toCreatePayload(data: CitizenFormData): CitizenCreateDTO {
     notes: nullable(data.notes),
     type: data.type,
     leaderId: nullable(data.leaderId),
-    userId: nullable(data.userId),
   };
 }
 

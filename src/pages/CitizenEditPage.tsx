@@ -33,7 +33,6 @@ function toForm(citizen: CitizenResponseByIdDTO): CitizenFormData {
     notes: normalize(citizen.notes),
     type: citizen.type,
     leaderId: normalize(citizen.leaderId),
-    userId: normalize(citizen.userId),
     isActive: citizen.isActive,
   };
 }
@@ -74,7 +73,6 @@ export function CitizenEditPage() {
         notes: nullable(data.notes),
         type: data.type,
         leaderId: nullable(data.leaderId),
-        userId: nullable(data.userId),
         isActive: data.isActive ?? true,
       });
       navigate(`/eleitores/${id}`);

@@ -135,7 +135,6 @@ export type CitizenCreateDTO = {
   notes?: string | null;
   type: number;
   leaderId?: string | null;
-  userId?: string | null;
 };
 
 export type CitizenUpdateDTO = {
@@ -159,7 +158,6 @@ export type CitizenUpdateDTO = {
   notes?: string | null;
   type: number;
   leaderId?: string | null;
-  userId?: string | null;
   isActive: boolean;
 };
 
@@ -169,6 +167,10 @@ export type CitizenResponseDTO = {
   nickname?: string | null;
   phone?: string | null;
   whatsApp?: string | null;
+  zipCode?: string | null;
+  street?: string | null;
+  city?: string | null;
+  state?: string | null;
   neighborhood?: string | null;
   district?: string | null;
   electoralZone?: string | null;
